@@ -78,7 +78,7 @@ def _recursive_expression(x, order, ops):
 @QueuingManager.stop_recording()
 def _simplify_trotter_sequence(decomp):
     """Simplify a list of operations by merging consecutive evolutions with the same base.
-    
+
     Args:
         decomp (list): A list of operations to simplify.
 
@@ -99,6 +99,8 @@ def _simplify_trotter_sequence(decomp):
             and qml.equal(prev.base, op.base)
         ):
             merged[-1] = qml_ops.Evolution(op.base, prev.param + op.param)
+            prev = merged[-1]
+            continue
 
         merged.append(op)
         prev = op
